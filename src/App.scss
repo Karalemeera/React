@@ -1,3 +1,4 @@
+@import '@clr/ui/clr-ui.css';
 .App {
   text-align: center;
 }
@@ -35,4 +36,17 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.nav{
+  box-shadow: none!important;
+}
+
+.color-square {
+  display: inline-block;
+  vertical-align: text-bottom;
+  height: var(--cds-global-space-7);
+  width: var(--cds-global-space-7);
+  border: var(--cds-alias-object-border-width-100) solid var(--cds-global-color-construction-1000);
+  border-radius: 0.2rem;
 }

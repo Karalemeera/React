@@ -4,12 +4,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { ClarityIcons, dotCircleIcon, circleIcon, successStandardIcon, errorStandardIcon, timesCircleIcon } from '@cds/core/icon';
+
+
+ClarityIcons.addIcons(dotCircleIcon);
+ClarityIcons.addIcons(circleIcon);
+ClarityIcons.addIcons(successStandardIcon);
+ClarityIcons.addIcons(errorStandardIcon);
+ClarityIcons.addIcons(timesCircleIcon);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
