@@ -1,77 +1,150 @@
 import React from 'react';
-import { CdsGrid, CdsGridRow, CdsGridCell, CdsGridColumn } from '@cds/react/grid'
+import { CdsGrid, CdsGridRow, CdsGridCell, CdsGridColumn } from '@cds/react/grid';
 
 export default function FirstTab() {
-    let users = [{
+    let dc_info = [{
         id: 1,
-        name: "Ellen",
-        color: "red",
-        creation: "Nov 01, 2021"
+        datacenter_name: "ap_onprem",
+        location: "-",
+        type: "On Premises",
+        status: "Connected",
+        discovery_status: "Completed",
+        gateway_version: "1.2",
+        application: 0
     },
     {
         id: 2,
-        name: "Georgia",
-        color: "pink",
-        creation: "Nov 17, 2021"
-    }, {
+        datacenter_name: "aws_dc1",
+        location: "Asia Pacific(Mumbai)",
+        type: "Cloud(AWS)",
+        status: "Not Connected",
+        discovery_status: "Not Completed",
+        gateway_version: "1.0.2",
+        application: 2
+    },
+    {
         id: 3,
-        name: "Roslyn",
-        color: "blue",
-        creation: "Nov 10, 2021"
+        datacenter_name: "aws_dc2",
+        location: "Asia Pacific(Mumbai)",
+        type: "Cloud(AWS)",
+        status: "Connected",
+        discovery_status: "Completed",
+        gateway_version: "1.2.0",
+        application: 4
     },
     {
         id: 4,
-        name: "Marcella",
-        color: "yellow",
-        creation: "Nov 18, 2021"
-    }, {
+        datacenter_name: "azure_dc1",
+        location: "Center India",
+        type: "Cloud(Azure)",
+        status: "Connected",
+        discovery_status: "Completed",
+        gateway_version: "1.12",
+        application: 2
+    },
+    {
         id: 5,
-        name: "Brynn",
-        color: "green",
-        creation: "Nov 14, 2021"
-    }, {
+        datacenter_name: "azure_dc3",
+        location: "Center India",
+        type: "Cloud(Azure)",
+        status: "Not Connected",
+        discovery_status: "Not Completed",
+        gateway_version: "1.2.1",
+        application: 7
+    },
+    {
         id: 6,
-        name: "Brynn",
-        color: "#187",
-        creation: "Nov 12, 2021"
-    }, {
+        datacenter_name: "aws_dc3",
+        location: "Asia Pacific(Mumbai)",
+        type: "Cloud(AWS)",
+        status: "Connected",
+        discovery_status: "Completed",
+        gateway_version: "1.2",
+        application: 1
+    },
+    {
         id: 7,
-        name: "Brynn",
-        color: "#567",
-        creation: "Nov 3, 2021"
-    }, {
+        datacenter_name: "aws_dc4",
+        location: "Asia Pacific(Mumbai)",
+        type: "Cloud(AWS)",
+        status: "Not Connected",
+        discovery_status: "Completed",
+        gateway_version: "1.2.8",
+        application: 4
+    },
+    {
         id: 8,
-        name: "Brynn",
-        color: "#333",
-        creation: "Nov 1, 2021"
-    }, {
+        datacenter_name: "aws_dc8",
+        location: "Asia Pacific(Mumbai)",
+        type: "Cloud(AWS)",
+        status: "Connected",
+        discovery_status: "Completed",
+        gateway_version: "1.2",
+        application: 1
+    },
+    {
         id: 9,
-        name: "Brynn",
-        color: "black",
-        creation: "Nov 4, 2021"
-    }, {
+        datacenter_name: "aws_dc7",
+        location: "Asia Pacific(Mumbai)",
+        type: "Cloud(AWS)",
+        status: "Connected",
+        discovery_status: "Not Completed",
+        gateway_version: "1.2",
+        application: 1
+    },
+    {
         id: 10,
-        name: "Brynn",
-        color: "grey",
-        creation: "Nov 6, 2021"
+        datacenter_name: "azure_dc8",
+        location: "Central India",
+        type: "Cloud(Azure)",
+        status: "Not Connected",
+        discovery_status: "Not Completed",
+        gateway_version: "1.2",
+        application: 1
     }]
     return (
         <div>
             <section id="panel1" role="tabpanel" aria-labelledby="tab1">
                 <CdsGrid>
-                    <CdsGridColumn>User ID</CdsGridColumn>
-                    <CdsGridColumn>Name</CdsGridColumn>
-                    <CdsGridColumn>Creation date</CdsGridColumn>
-                    <CdsGridColumn>Favorite color</CdsGridColumn>
-                    {users.map(user => {
+                    <CdsGridColumn>Datacenter Name</CdsGridColumn>
+                    <CdsGridColumn>Location</CdsGridColumn>
+                    <CdsGridColumn>Type</CdsGridColumn>
+                    <CdsGridColumn>Connection Status</CdsGridColumn>
+                    <CdsGridColumn>Discovery Status</CdsGridColumn>
+                    <CdsGridColumn>Gateway Version</CdsGridColumn>
+                    <CdsGridColumn>Application</CdsGridColumn>
+                    {dc_info.map(dc => {
+                        let isConnected = true;
+                        let isDiscoveryConnected = true;
+                        if (dc.discovery_status === "Not Completed") {
+                            isDiscoveryConnected = true;
+                        } else {
+                            isDiscoveryConnected = false;
+                        }
+
+                        if (dc.status === "Not Connected") {
+                            isConnected = true;
+                        } else {
+                            isConnected = false;
+                        }
                         return (
                             <CdsGridRow >
-                                <CdsGridCell>{user.id}</CdsGridCell>
-                                <CdsGridCell>{user.name}</CdsGridCell>
-                                <CdsGridCell>{user.creation}</CdsGridCell>
+                                <CdsGridCell>{dc.datacenter_name}</CdsGridCell>
+                                <CdsGridCell>{dc.location}</CdsGridCell>
+                                <CdsGridCell>{dc.type}</CdsGridCell>
                                 <CdsGridCell>
-                                    <span className="color-square" style={{ background: user.color }}></span>
+                                    <span className={isConnected ? 'errorStandardClassName' : 'successStandardClassName'}>
+                                        {dc.status}
+                                        {/* <CdsIcon role="img" width={40} height={40} shape={isConnected ? errorStandardIconName : successStandardIconName}></CdsIcon> */}
+                                    </span>
                                 </CdsGridCell>
+                                <CdsGridCell>
+                                    <span className={isDiscoveryConnected ? 'errorStandardClassName' : 'successStandardClassName'}>
+                                        {dc.discovery_status}
+                                    </span>
+                                </CdsGridCell>
+                                <CdsGridCell>{dc.gateway_version}</CdsGridCell>
+                                <CdsGridCell>{dc.application}</CdsGridCell>
                             </CdsGridRow>
                         )
 
