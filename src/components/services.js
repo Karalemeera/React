@@ -15,44 +15,58 @@ const countries = [{
 }];
 export default function Services() {
     const inputRef = useRef(null);
-    const handleUpClick = () => {
-        let newText = text.toUpperCase()
-        setText(newText)
-    }
-    const handleLowClick = () => {
-        let newText = text.toLocaleLowerCase()
-        setText(newText)
-    }
-    const handleClearTextClick = () => {
-        setText("")
-    }
+    const [submitted, setSubmitted] = useState(false);
+    const [form, setForm] = useState({ dcname: '', location: "", type: "", resource_prefix: "", version: "" });
+    // const handleUpClick = () => {
+    //     let newText = text.toUpperCase()
+    //     setText(newText)
+    // }
+    // const handleLowClick = () => {
+    //     let newText = text.toLocaleLowerCase()
+    //     setText(newText)
+    // }
+    // const handleClearTextClick = () => {
+    //     setText("")
+    // }
     const TextChanged = (e) => {
         setText(e.target.value)
     }
+    const onChange = (e, name) => {
+        setForm({
+            ...form, [name]: e.target.value
+        })
+        if (name === "version") {
+            setCountry(e.target.value)
+        }
+    }
+    const handleSubmit = (event) => {
+        // console.log(form);
+        setSubmitted(true);
+    }
     const [text, setText] = useState('Enter prefix here to search in dc');
 
-    const [country, setCountry] = useState({ name: "India", value: "IND", cities: ['Delhi', 'Mumbai'] })
+    const [country, setCountry] = useState("")
     return (
         <>
             <h3 className='my-2'>Datacenter information</h3>
-            <Form >
+            <Form>
                 <div className='row'>
                     <div className='col-md-4'>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>Datacenter Name</Form.Label>
-                            <Form.Control type="name" placeholder="e.g.aws/azure" ref={inputRef} />
+                            <Form.Control type="name" placeholder="e.g.aws/azure" onChange={(e) => onChange(e, 'dcname')} />
                         </Form.Group>
                     </div>
                     <div className='col-md-4'>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
                             <Form.Label>Location</Form.Label>
-                            <Form.Control type="email" placeholder="e.g.Central India" />
+                            <Form.Control type="text" placeholder="e.g.Central India" onChange={(e) => onChange(e, 'location')} />
                         </Form.Group>
                     </div>
                     <div className='col-md-4'>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
                             <Form.Label>Type</Form.Label>
-                            <Form.Control type="text" placeholder="e.g.onprem/cloud" />
+                            <Form.Control type="text" placeholder="e.g.onprem/cloud" onChange={(e) => onChange(e, 'type')} />
                         </Form.Group>
                     </div>
 
@@ -61,7 +75,7 @@ export default function Services() {
                     <div className='col-md-6'>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                             <Form.Label>Resource prefix</Form.Label>
-                            <Form.Control as="textarea" value={text} onChange={TextChanged} />
+                            <Form.Control as="textarea" value={text} onChange={(e) => onChange(e, 'resource_prefix')} />
                         </Form.Group>
                     </div>
                     <div className='col-md-6'>
@@ -70,6 +84,21 @@ export default function Services() {
                             <Form.Control type="file" />
                         </Form.Group>
                     </div>
+                </div>
+                <div className='row'>
+                    <div className='col-md-6'>
+                        {/* <button className='btn btn-primary mx-2' type='button' onClick={handleUpClick}>Convert to Uppercase</button>
+                        <button className='btn btn-primary mx-2' type='button' onClick={handleLowClick}>Convert to Lowercase</button>
+                        <button className='btn btn-primary mx-2' type='button' onClick={handleClearTextClick}>Clear Text</button> */}
+                        <h1>Your resource prefix summary</h1>
+                        <p>{text.split(" ").length} words and {text.length} characters</p>
+                        <p>{0.008 * text.split(" ").length} Minutes read</p>
+                    </div>
+                    <div className='col-md-6'>
+                        <h2>Preview</h2>
+                        <p>{text}</p>
+                    </div>
+
                 </div>
                 <div className='row my-3'>
                     <div className='col-md-6'>
@@ -100,9 +129,7 @@ export default function Services() {
 
                         <select className="form-select"
                             value={country}
-                            onChange={(e) => {
-                                setCountry(Number(e.target.value));
-                            }}
+                            onChange={(e) => onChange(e, 'version')}
                         >
                             {
                                 countries.map((opt, index) => {
@@ -111,23 +138,19 @@ export default function Services() {
                             }
                         </select>
                     </div>
-
-                </div>
-                <div className='row'>
-                    <div className='col-md-6'>
-                        <button className='btn btn-primary mx-2' type='button' onClick={handleUpClick}>Convert to Uppercase</button>
-                        <button className='btn btn-primary mx-2' type='button' onClick={handleLowClick}>Convert to Lowercase</button>
-                        <button className='btn btn-primary mx-2' type='button' onClick={handleClearTextClick}>Clear Text</button>
-                        <h1>Your resource prefix summary</h1>
-                        <p>{text.split(" ").length} words and {text.length} characters</p>
-                        <p>{0.008 * text.split(" ").length} Minutes read</p>
+                    <div className='col-md-2'>
+                        <button type="button mb-4" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
                     </div>
-                    <div className='col-md-6'>
-                        <h2>Preview</h2>
-                        <p>{text}</p>
+                    <div className='col-md-4'>
+                        {submitted && <ul className="list-group">
+                            {
+                                Object.keys(form).map(k => <li className="list-group-item"><b>{k}</b> : {form[k]}</li>)
+                            }
+                        </ul>}
                     </div>
 
                 </div>
+
             </Form >
         </>
     )
