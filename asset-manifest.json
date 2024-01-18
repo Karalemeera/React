@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.34185615.css",
+    "main.js": "/static/js/main.cc4bfd43.js",
+    "static/js/787.d4aba7ab.chunk.js": "/static/js/787.d4aba7ab.chunk.js",
+    "static/media/vmw-illu-cross-cloud-services.jpg": "/static/media/vmw-illu-cross-cloud-services.7197acc35e2f929b3ffd.jpg",
+    "index.html": "/index.html",
+    "static/media/cloud-FilledHoverstate.svg": "/static/media/cloud-FilledHoverstate.36f4fb1ae50763ea25cf420aba8f8652.svg",
+    "main.34185615.css.map": "/static/css/main.34185615.css.map",
+    "main.cc4bfd43.js.map": "/static/js/main.cc4bfd43.js.map",
+    "787.d4aba7ab.chunk.js.map": "/static/js/787.d4aba7ab.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.34185615.css",
+    "static/js/main.cc4bfd43.js"
+  ]
+}
