@@ -9,7 +9,7 @@ import Solutions from './components/Solutions';
 
 function App() {
   return (<>
-    <BrowserRouter>
+    <BrowserRouter basename='/React'>
       <Routes>
         <Route path="/" element={<Layout><Services /></Layout>} />
         <Route path="/products" element={<Layout><Product /></Layout>} />
