@@ -85,6 +85,48 @@ export default function Services() {
                         </Form.Group>
                     </div>
                 </div>
+                <div className='row my-3'>
+                    <div className='col-md-6'>
+                        <CdsRange>
+                            <label>Migration Status</label>
+                            <input type="range" value={90} name="two" />
+                        </CdsRange>
+                    </div>
+                    <div className='col-md-6'>
+                        <h2 cds-text="section" className='my-2'>Configuration for discovery status</h2>
+                        <section cds-layout="horizontal gap:md">
+                            <CdsBadge status="info">2</CdsBadge>
+                            <CdsBadge status="success">3</CdsBadge>
+                            <CdsBadge status="warning">12</CdsBadge>
+                            <CdsBadge status="danger">15</CdsBadge>
+                            <CdsBadge color="gray">1</CdsBadge>
+                            <CdsBadge color="purple">1</CdsBadge>
+                            <CdsBadge color="blue">15</CdsBadge>
+                            <CdsBadge color="orange">2</CdsBadge>
+                            <CdsBadge color="light-blue">3</CdsBadge>
+                        </section>
+                    </div>
+                </div>
+
+                <div className='row'>
+                    <div className='col-md-6'>
+                        <Form.Label className='px-md-2'>Select version</Form.Label>
+
+                        <select className="form-select"
+                            value={country}
+                            onChange={(e) => {
+                                setCountry(Number(e.target.value));
+                            }}
+                        >
+                            {
+                                countries.map((opt, index) => {
+                                    return (<option value={index}>{opt.name}</option>)
+                                })
+                            }
+                        </select>
+                    </div>
+
+                </div>
                 <div className='row'>
                     <div className='col-md-6'>
                         {/* <button className='btn btn-primary mx-2' type='button' onClick={handleUpClick}>Convert to Uppercase</button>
