@@ -18,11 +18,11 @@ export default function Contact() {
     };
     return (
         <>
-
+            <h4 className='my-3'>Datacenters and its Management</h4>
             <ul className="nav" role="tablist">
                 <li role="presentation" className="nav-item" onClick={handleTab1}>
                     <button id="tab1" className={activeTab === "tab1" ? "active btn btn-link nav-link" : "btn btn-link nav-link"} aria-controls="panel1" aria-selected="true" type="button">
-                        Dashboard
+                        Datacenters
                     </button>
                 </li>
                 <li role="presentation" className="nav-item" onClick={handleTab2} >

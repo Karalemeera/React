@@ -50,3 +50,15 @@
   border: var(--cds-alias-object-border-width-100) solid var(--cds-global-color-construction-1000);
   border-radius: 0.2rem;
 }
+
+.errorStandardClassName {
+  color: red;
+}
+
+.successStandardClassName {
+  color: green;
+}
+
+.active a{
+  color: #db2b2b;
+}
