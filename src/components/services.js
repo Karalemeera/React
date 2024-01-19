@@ -2,50 +2,53 @@
 
 
 import Form from 'react-bootstrap/Form';
-import React, { useRef, useState } from 'react';
-import { CdsRange } from '@cds/react/range';
-import { CdsBadge } from '@cds/react/badge';
-
-const countries = [{
-    version: "1.2", value: "1"
+import React, { useState } from 'react';
+import { useAppContext } from '../context/App-context';
+const versions = [{
+    name: "1", value: "1"
 }, {
-    name: "2.1", value: "2"
+    name: "2", value: "2"
 }, {
-    name: "3.1", value: "3"
+    name: "3", value: "3"
+}, {
+    name: "4", value: "3"
+}, {
+    name: "5", value: "3"
+}, {
+    name: "6", value: "3"
 }];
-export default function Services() {
-    const inputRef = useRef(null);
+export default function Services({ onSubmit }) {
     const [submitted, setSubmitted] = useState(false);
-    const [form, setForm] = useState({ dcname: '', location: "", type: "", resource_prefix: "", version: "" });
-    // const handleUpClick = () => {
-    //     let newText = text.toUpperCase()
-    //     setText(newText)
-    // }
-    // const handleLowClick = () => {
-    //     let newText = text.toLocaleLowerCase()
-    //     setText(newText)
-    // }
-    // const handleClearTextClick = () => {
-    //     setText("")
-    // }
-    const TextChanged = (e) => {
-        setText(e.target.value)
-    }
-    const onChange = (e, name) => {
-        setForm({
-            ...form, [name]: e.target.value
-        })
+    const [form, setForm] = useState({ datacenter_name: '', location: "", type: "", resource_prefix: "", version: 1, connection_status: false, discovery_status: false, application: "" });
+    const [isConnected, setConnection] = useState();
+    const [isDiscovery, setDiscovery] = useState();
+    const [text, setText] = useState('Enter prefix here to search in dc');
+    const [version, setVersion] = useState("");
+    const { state, addData } = useAppContext();
+    const onChange = (val, name) => {
         if (name === "version") {
-            setCountry(e.target.value)
+            setVersion(val)
         }
+        if (name === "resource_prefix") {
+            setText(val)
+        }
+        if (name === "connection_status") {
+            setConnection(isConnected ? false : true)
+        }
+        if (name === "discovery_status") {
+            setDiscovery(!isDiscovery ? false : true)
+        }
+        setForm({
+            ...form, [name]: val
+        })
     }
     const handleSubmit = (event) => {
-        // console.log(form);
         setSubmitted(true);
+        addData(form)
+        console.log(form);
+        alert("Datacenter data is updated in table. Please check datacenter table")
     }
-    const [text, setText] = useState('Enter prefix here to search in dc');
 
-    const [country, setCountry] = useState("")
     return (
         <>
             <h3 className='my-2'>Datacenter information</h3>
@@ -53,146 +56,104 @@ export default function Services() {
                 <div className='row'>
                     <div className='col-md-4'>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Datacenter Name</Form.Label>
-                            <Form.Control type="name" placeholder="e.g.aws/azure" onChange={(e) => onChange(e, 'dcname')} />
+                            <Form.Label className='fw-bold'>Datacenter Name</Form.Label>
+                            <Form.Control type="name" placeholder="e.g.aws/azure" onChange={(e) => onChange(e.target.value, 'datacenter_name')} />
                         </Form.Group>
                     </div>
                     <div className='col-md-4'>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-                            <Form.Label>Location</Form.Label>
-                            <Form.Control type="text" placeholder="e.g.Central India" onChange={(e) => onChange(e, 'location')} />
+                            <Form.Label className='fw-bold'>Location</Form.Label>
+                            <Form.Control type="text" placeholder="e.g.Central India" onChange={(e) => onChange(e.target.value, 'location')} />
                         </Form.Group>
                     </div>
                     <div className='col-md-4'>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
-                            <Form.Label>Type</Form.Label>
-                            <Form.Control type="text" placeholder="e.g.onprem/cloud" onChange={(e) => onChange(e, 'type')} />
+                            <Form.Label className='fw-bold'>Type</Form.Label>
+                            <Form.Control type="text" placeholder="e.g.onprem/cloud" onChange={(e) => onChange(e.target.value, 'type')} />
                         </Form.Group>
                     </div>
 
                 </div>
                 <div className='row'>
-                    <div className='col-md-6'>
+                    <div className='col-md-4'>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                            <Form.Label>Resource prefix</Form.Label>
-                            <Form.Control as="textarea" value={text} onChange={(e) => onChange(e, 'resource_prefix')} />
+                            <Form.Label className="fw-bold">Resource prefix</Form.Label>
+                            <Form.Control type="text" placeholder={text} onChange={(e) => onChange(e.target.value, 'resource_prefix')} />
                         </Form.Group>
                     </div>
-                    <div className='col-md-6'>
-                        <Form.Group controlId="formFile" className="mb-3">
-                            <Form.Label>Upload datacenter template</Form.Label>
-                            <Form.Control type="file" />
-                        </Form.Group>
-                    </div>
-                </div>
-                <div className='row my-3'>
-                    <div className='col-md-6'>
-                        <CdsRange>
-                            <label>Migration Status</label>
-                            <input type="range" value={90} name="two" />
-                        </CdsRange>
-                    </div>
-                    <div className='col-md-6'>
-                        <h2 cds-text="section" className='my-2'>Configuration for discovery status</h2>
-                        <section cds-layout="horizontal gap:md">
-                            <CdsBadge status="info">2</CdsBadge>
-                            <CdsBadge status="success">3</CdsBadge>
-                            <CdsBadge status="warning">12</CdsBadge>
-                            <CdsBadge status="danger">15</CdsBadge>
-                            <CdsBadge color="gray">1</CdsBadge>
-                            <CdsBadge color="purple">1</CdsBadge>
-                            <CdsBadge color="blue">15</CdsBadge>
-                            <CdsBadge color="orange">2</CdsBadge>
-                            <CdsBadge color="light-blue">3</CdsBadge>
-                        </section>
-                    </div>
-                </div>
-
-                <div className='row'>
-                    <div className='col-md-6'>
-                        <Form.Label className='px-md-2'>Select version</Form.Label>
+                    <div className='col-md-4'>
+                        <Form.Label className='px-md-2 fw-bold'>Select gateway version</Form.Label>
 
                         <select className="form-select"
-                            value={country}
+                            value={version}
                             onChange={(e) => {
-                                setCountry(Number(e.target.value));
+                                setVersion(Number(e.target.value));
                             }}
                         >
                             {
-                                countries.map((opt, index) => {
+                                versions.map((opt, index) => {
                                     return (<option value={index}>{opt.name}</option>)
                                 })
                             }
                         </select>
+
+                    </div>
+                    <div className='col-md-4'>
+                        <div class="clr-toggle-wrapper mb-3">
+                            <input type="checkbox" id="connection" name="connection_status" value={isConnected} class="clr-toggle" onChange={(e) => onChange(e.target.checked, 'connection_status')} />
+                            <label htmlFor="connection" className='fw-bold'>Initiate connection</label>
+                        </div>
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col-md-4'>
+                        <h4>Your resource prefix summary</h4>
+                        <p>{text.split(" ").length} words and {text.length} characters</p>
+                    </div>
+                    <div className='col-md-4'>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput5">
+                            <Form.Label className='fw-bold'>Applications</Form.Label>
+                            <Form.Control type="number" placeholder="1,2,3" onChange={(e) => onChange(e.target.value, 'application')} />
+                        </Form.Group>
+                    </div>
+                    <div className='col-md-4'>
+                        {isDiscovery}
+                        <div class="clr-toggle-wrapper mb-3">
+                            <input type="checkbox" id="discovery" name="discovery_status" value={isDiscovery} class="clr-toggle" onChange={(e) => onChange(e.target.checked, 'discovery_status')} />
+                            <label htmlFor="discovery" className='fw-bold'>Initiate Discovery</label>
+                        </div>
                     </div>
 
                 </div>
                 <div className='row'>
-                    <div className='col-md-6'>
+                    <div className='col-md-4'>
                         {/* <button className='btn btn-primary mx-2' type='button' onClick={handleUpClick}>Convert to Uppercase</button>
                         <button className='btn btn-primary mx-2' type='button' onClick={handleLowClick}>Convert to Lowercase</button>
                         <button className='btn btn-primary mx-2' type='button' onClick={handleClearTextClick}>Clear Text</button> */}
-                        <h1>Your resource prefix summary</h1>
-                        <p>{text.split(" ").length} words and {text.length} characters</p>
-                        <p>{0.008 * text.split(" ").length} Minutes read</p>
-                    </div>
-                    <div className='col-md-6'>
-                        <h2>Preview</h2>
+                        <h4>Preview</h4>
                         <p>{text}</p>
-                    </div>
-
-                </div>
-                <div className='row my-3'>
-                    <div className='col-md-6'>
-                        <CdsRange>
-                            <label>Migration Status</label>
-                            <input type="range" value={90} name="two" />
-                        </CdsRange>
-                    </div>
-                    <div className='col-md-6'>
-                        <h2 cds-text="section" className='my-2'>Configuration for discovery status</h2>
-                        <section cds-layout="horizontal gap:md">
-                            <CdsBadge status="info">2</CdsBadge>
-                            <CdsBadge status="success">3</CdsBadge>
-                            <CdsBadge status="warning">12</CdsBadge>
-                            <CdsBadge status="danger">15</CdsBadge>
-                            <CdsBadge color="gray">1</CdsBadge>
-                            <CdsBadge color="purple">1</CdsBadge>
-                            <CdsBadge color="blue">15</CdsBadge>
-                            <CdsBadge color="orange">2</CdsBadge>
-                            <CdsBadge color="light-blue">3</CdsBadge>
-                        </section>
-                    </div>
-                </div>
-
-                <div className='row'>
-                    <div className='col-md-6'>
-                        <Form.Label className='px-md-2'>Select version</Form.Label>
-
-                        <select className="form-select"
-                            value={country}
-                            onChange={(e) => onChange(e, 'version')}
-                        >
-                            {
-                                countries.map((opt, index) => {
-                                    return (<option value={index}>{opt.name}</option>)
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div className='col-md-2'>
-                        <button type="button mb-4" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                        {/* <p>{0.008 * text.split(" ").length} Minutes read</p> */}
                     </div>
                     <div className='col-md-4'>
+
+                    </div>
+                    <div className='col-md-2'>
+                    </div>
+                    <div className='col-md-2 my-2'>
+                        <button type="button" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                    </div>
+                </div>
+
+                {/* <div className='row'>
+                    <div className='col-md-12'>
                         {submitted && <ul className="list-group">
                             {
-                                Object.keys(form).map(k => <li className="list-group-item"><b>{k}</b> : {form[k]}</li>)
+                                Object.keys(form).map(k => <li className="list-group-item flex"><b>{k}</b> : {form[k]}</li>)
                             }
                         </ul>}
                     </div>
 
-                </div>
-
+                </div> */}
             </Form >
         </>
     )

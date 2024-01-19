@@ -48,9 +48,7 @@ export default function Solutions() {
               </div>
             </div>
             <div className="card-footer">
-              <button className="btn btn-sm btn-link" onClick={() => {
-                alert("No action")
-              }}>Action</button>
+              <b>Check updates of Topology and  Networking</b>
             </div>
           </div>
         </div>
@@ -76,9 +74,7 @@ export default function Solutions() {
               </div>
             </div>
             <div className="card-footer">
-              <button className="btn btn-sm btn-link" onClick={() => {
-                alert("No action")
-              }}>Action</button>
+              <b>Storage and file system</b>
             </div>
           </div>
         </div>
