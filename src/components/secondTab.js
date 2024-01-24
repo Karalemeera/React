@@ -33,9 +33,6 @@ export default function secondTab() {
                                     <Form.Control type="file" placeholder='dc template' className="btn btn-sm" />
                                 </Form.Group>
                             </Form>
-                            {/* <button className="btn btn-sm" onClick={() => {
-                                alert("No action")
-                            }}>Action</button> */}
                         </span>
                     </div>
                 </li>

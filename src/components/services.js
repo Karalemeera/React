@@ -127,12 +127,8 @@ export default function Services({ onSubmit }) {
                 </div>
                 <div className='row'>
                     <div className='col-md-4'>
-                        {/* <button className='btn btn-primary mx-2' type='button' onClick={handleUpClick}>Convert to Uppercase</button>
-                        <button className='btn btn-primary mx-2' type='button' onClick={handleLowClick}>Convert to Lowercase</button>
-                        <button className='btn btn-primary mx-2' type='button' onClick={handleClearTextClick}>Clear Text</button> */}
                         <h4>Preview</h4>
                         <p>{text}</p>
-                        {/* <p>{0.008 * text.split(" ").length} Minutes read</p> */}
                     </div>
                     <div className='col-md-4'>
 
@@ -143,17 +139,6 @@ export default function Services({ onSubmit }) {
                         <button type="button" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
                     </div>
                 </div>
-
-                {/* <div className='row'>
-                    <div className='col-md-12'>
-                        {submitted && <ul className="list-group">
-                            {
-                                Object.keys(form).map(k => <li className="list-group-item flex"><b>{k}</b> : {form[k]}</li>)
-                            }
-                        </ul>}
-                    </div>
-
-                </div> */}
             </Form >
         </>
     )
